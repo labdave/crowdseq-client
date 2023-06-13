@@ -1,0 +1,32 @@
+<div [seqLoadingOverlay]="isLoading" fxLayout="column" fxLayoutAlign="start center" style="height:100%">
+
+    <app-gene-card  *ngIf="geneData" [data]="geneData" style="padding-top: 10px; width: 100%; min-height: 30%"></app-gene-card>
+
+    <app-variant-card *ngIf="variantData" [data]="variantData" style="padding-top: 10px; width:100%; min-height: 30%"></app-variant-card>
+
+    <!-- <div *ngIf="transcriptData && transcriptData.length > 0" fxLayoutAlign="start start" style="width: 100%" class="section-header">
+        <h1>Transcripts</h1>
+    </div> -->
+    <!-- <div  fxFlex fxLayout="column" *ngFor="let transcript of transcriptData" style="padding-top: 10px; width:100%">
+        <app-transcript-card [data]="transcript"></app-transcript-card>
+    </div> -->
+
+    <div style="padding-top: 10px; width: 100%; height: 600px; min-height: 600px">
+        <div fxFill fxLayoutAlign="space-between center" style="padding-left: 15px;">
+            <mat-card class="card-container">
+                <div fxFlex fxLayout="column" style="overflow:hidden">
+                    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+                        <mat-tab label="Annovar">
+                            <app-annovar-card [data]="annovarData"></app-annovar-card>
+                        </mat-tab>>
+                        <mat-tab label="Clinvar">
+                            <app-clinvar-viewer [data]="clinvarData"></app-clinvar-viewer>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+    <!-- <app-transcript-list fxFlex="40" *ngIf="transcriptData" [data]="transcriptData" style="padding-top: 10px; padding-bottom: 10px; width:100%"></app-transcript-list> -->
+</div>
+  

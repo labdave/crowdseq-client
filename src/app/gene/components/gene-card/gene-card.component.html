@@ -1,0 +1,23 @@
+<div fxFill fxLayoutAlign="space-between center">
+    <mat-card *ngIf="currentGene" class="card-container" style="margin-left: 15px">
+        <div fxFlex fxLayout="column" style="width: 100%">
+            <div *ngIf="geneList && geneList.length > 1" fxLayout="column" class="auto-width-mat-select gene-select">
+                <mat-select [(value)]="selectedGeneId" style="margin-bottom: 8px;" (selectionChange)="geneListSelectionChange($event)">
+                  <mat-option [value]="gene.id" *ngFor="let gene of geneList">{{ gene.approved_symbol }}</mat-option>
+                </mat-select>
+                <mat-card-subtitle style="margin-bottom: 0px">Gene</mat-card-subtitle>
+            </div>
+            <div *ngIf="!geneList || geneList.length == 1" fxLayout="column" class="gene-select">
+                <mat-card-title>{{ currentGene.approved_symbol }}</mat-card-title>
+                <mat-card-subtitle>Gene</mat-card-subtitle>
+            </div>
+
+            <div fxFlex fxLayout="column" fxLayoutAlign="start start">
+                <div fxFlex fxLayout="column" style="width: 100%; padding-bottom: 10px; overflow:auto;">
+                    <app-annotation-selector fxFlex [annotations]="annotationList" [(index)]="annotationIndex" (listUpdated)="updateGeneAnnotationList($event)" 
+                        class="annotation-selector"></app-annotation-selector>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

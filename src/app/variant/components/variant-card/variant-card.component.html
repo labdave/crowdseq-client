@@ -1,0 +1,55 @@
+<div fxFill fxLayoutAlign="space-between center">
+    <mat-card class="card-container" style="margin-left: 15px">
+      <div fxFlex fxLayout="column" style="overflow:auto">
+        <div fxFlex fxLayout="row" fxLayoutAlign="space-between start">
+            <div fxFlex fxLayout="row" fxLayoutAlign="start start" class="card-header">
+                <div *ngIf="aminoAcidList && aminoAcidList.length > 1" fxFlex fxLayout="column" class="auto-width-mat-select aa-select">
+                  <mat-select [(value)]="selectedAAChangeId" style="margin-bottom: 8px;" (selectionChange)="updateAminoAcidSelection($event)">
+                    <mat-option [value]="aa.id" *ngFor="let aa of data.amino_acid_changes">{{ aa.short_name }}</mat-option>
+                  </mat-select>
+                  <mat-card-subtitle>({{ selectedAAChange.long_name }})</mat-card-subtitle>
+                </div>
+                <div *ngIf="aminoAcidList && aminoAcidList.length == 1" fxFlex fxLayout="column" class="aa-select">
+                  <mat-card-title>{{ selectedAAChange.short_name }}</mat-card-title>
+                  <mat-card-subtitle>({{ selectedAAChange.long_name }})</mat-card-subtitle>
+                </div>
+                <div *ngIf="annotationTier" style="padding-right: 50px">
+                  <mat-card-title>Tier {{ annotationTier }}</mat-card-title>
+                  <mat-card-subtitle *ngIf="annotationTierSummary" >({{ annotationTierSummary }})</mat-card-subtitle>
+                </div>
+                
+              </div>
+        </div>
+        
+        <div fxFlex="80" fxLayout="column" fxLayoutAlign="start start">
+          <div fxFlex fxLayout="column" *ngIf="showAminoAcidAnnotations" style="width: 100%; padding-bottom: 10px;">
+            <app-annotation-selector fxFlex [annotations]="variantAnnotationList" [(index)]="variantAnnotationIndex" (indexChange)="updateAnnotationTier($event)" (listUpdated)="updateVariantAnnotationList($event)" class="annotation-selector"></app-annotation-selector>
+          </div>
+          <div *ngIf="!showAminoAcidAnnotations" fxLayout="row" fxLayoutAlign="space-around center" style="width: 100%; padding-bottom: 10px;">
+            <div fxFlex="80">
+              <p style="margin-top: 0px;">This variant is of unknown biological significance.</p>
+            </div>
+            <div fxFlex>
+              <button mat-icon-button (click)="editAnnotation()" matTooltip="Edit Annotation">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div fxFlex *ngIf="transcriptList && transcriptList.length > 0" fxLayout="row" fxLayoutAlign="start center">
+          <mat-card-title style="padding-right: 20px">Transcripts</mat-card-title>
+          <div *ngFor="let t of transcriptList" fxLayout="row" fxLayoutAlign="center center" style="padding-right: 20px">
+            <div *ngIf="t.canonical">
+              <mat-icon style="padding-right:10px;" [ngStyle]="{'color':'#00cca5'}" matTooltip="Canonical Transcript">check_circle</mat-icon>
+            </div>
+            <div fxLayout="column">
+              <span>{{ t.ensembl_transcript_id }}<span *ngIf="t.refseq_match">( {{ t.refseq_match }} )</span></span>
+              <span>Length: {{ t.transcript_length }}</span>
+            </div>
+          </div>
+      </div>
+      </div>
+    </mat-card>
+  </div>
+  
